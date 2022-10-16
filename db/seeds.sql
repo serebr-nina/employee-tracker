@@ -6,23 +6,25 @@ VALUES
 ('Sales'),
 ('IT'),
 ('Legal'),
-('Engineering'),
-('Finance');
+('Engineering'); 
+
 
 INSERT INTO role
 (title, salary, department_id)
 VALUES
 ('Sales Lead', 75000, 1),
 ('IT Support', 100000, 2),
-('Lawer', 3000, 3),
-('Engineer', 150000, 4),
-('Accountant', 55000, 5);
+('Lawer', 30000, 3),
+('Engineer', 150000, 4);
+
 
 INSERT INTO employee
 (first_name, last_name, role_id, manager_id )
 VALUES
-('Alex', 'Chen', 1, NULL),
-('Lindsay', 'Reiner', 2, NULL),
-('Caleb', 'Crum', 1, 1);
+('Andy', 'Cline', 1, NULL),
+('Linda', 'Ray', 2, NULL),
+('Jhon', 'Doe', 1, 1),
+('Nick', 'Vue', 4, 2);
+
 
 
