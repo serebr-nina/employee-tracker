@@ -54,7 +54,7 @@ const mainMenu = async () => {
             ]
         }
     ])
-    //console.log('choice ' + options.choice);
+
     switch (options.choice) {
         case 'VIEW_DEPARTMENTS':
             viewDepartments();
@@ -64,7 +64,7 @@ const mainMenu = async () => {
             break;
         case 'VIEW_EMPLOYEES':
             viewEmployees();
-            break;    
+            break;
         case 'ADD_DEPARTMENT':
             addDepartment();
             break;
@@ -125,7 +125,7 @@ const addDepartment = async () => {
             }
         }
     ])
-    //console.log(options.name);
+
     const params = [options.name];
     await db.query('INSERT INTO department (name) VALUES (?)', params);
     console.log(`Added Department ${options.name} to the database`);
@@ -134,15 +134,13 @@ const addDepartment = async () => {
 
 const addRole = async () => {
     const [departmentData] = await db.query('SELECT * FROM department');
-    //console.log(departmentData);
-    //const choices = departmentData.map(x => {x.name});
+
     const choices = departmentData.map((item) => {
         const choice = {};
         choice.name = item.name;
         choice.value = item.id;
         return choice;
     });
-    //console.log(choices);
 
     const options = await prompt([
         {
@@ -178,7 +176,7 @@ const addRole = async () => {
             choices: choices
         }
     ])
-    //console.log(options.name);
+
     const params = [options.name, options.salary, options.department];
     await db.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', params);
     console.log(`Added Role ${options.name} to the database`);
@@ -187,8 +185,7 @@ const addRole = async () => {
 
 const addEmployee = async () => {
     const [roleData] = await db.query(`SELECT role.id, role.title FROM role`);
-    //console.log(roleData);
-    //const choices = departmentData.map(x => {x.name});
+
     const choices1 = roleData.map((item) => {
         const choice = {};
         choice.name = item.title;
@@ -196,15 +193,13 @@ const addEmployee = async () => {
         return choice;
     });
     const [employeeData] = await db.query(`SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`);
-    //console.log(roleData);
-    //const choices = departmentData.map(x => {x.name});
+
     const choices2 = employeeData.map((item) => {
         const choice = {};
         choice.name = item.name;
         choice.value = item.id;
         return choice;
     });
-    //console.log(choices2);
 
     const options = await prompt([
         {
@@ -246,7 +241,7 @@ const addEmployee = async () => {
             choices: choices2
         }
     ])
-    //console.log(options.name);
+
     const params = [options.first, options.last, options.role, options.manager];
     await db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', params);
     console.log(`Added Employee ${options.first} ${options.last} to the database`);
@@ -255,8 +250,7 @@ const addEmployee = async () => {
 
 const updateEmployeeRole = async () => {
     const [roleData] = await db.query(`SELECT role.id, role.title FROM role`);
-    //console.log(roleData);
-    //const choices = departmentData.map(x => {x.name});
+
     const choices1 = roleData.map((item) => {
         const choice = {};
         choice.name = item.title;
@@ -264,15 +258,13 @@ const updateEmployeeRole = async () => {
         return choice;
     });
     const [employeeData] = await db.query(`SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`);
-    //console.log(roleData);
-    //const choices = departmentData.map(x => {x.name});
+
     const choices2 = employeeData.map((item) => {
         const choice = {};
         choice.name = item.name;
         choice.value = item.id;
         return choice;
     });
-    //console.log(choices2);
 
     const options = await prompt([
         {
@@ -291,8 +283,8 @@ const updateEmployeeRole = async () => {
     ])
     const employeeName = choices2.find(element => element.value === options.employee);
     const roleName = choices1.find(element => element.value === options.role);
-    //console.log(options.name);
     const params = [options.role, options.employee];
+
     await db.query('UPDATE employee SET role_id = ? WHERE id = ?', params);
     console.log(`Updated Employee ${employeeName.name} role to ${roleName.name}`);
     mainMenu();
